@@ -145,7 +145,7 @@ pip3.9 uninstall numpy
 pip3.9 install numpy==1.21.5 --target=$ORACLE_HOME/oml4py/modules
 ```
 This command installs the cx_Oracle package using an example proxy server:  
-`pip3.9 install cx_Oracle==8.1.0 --proxy="http://www-proxy.example.com:80" --target=$ORACLE_HOME/oml4py/modules`
+```pip3.9 install cx_Oracle==8.1.0 --proxy="http://www-proxy.example.com:80" --target=$ORACLE_HOME/oml4py/modules```
 
 Verify the Package Installation  
 Load the packages below to ensure they have been installed successfully. Start Python and run the following commands:
