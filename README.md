@@ -13,13 +13,15 @@ Operating System and Hardware Platform	Description
 On-Premises OML4Py Configuration Requirements and Server Support Matrix
   - Oracle Machine Learning for Python Version	Python Version	On-Premises Oracle Database Release 1.0	3.9.5	19c, 21c
 
-setp1: Build and Install Python for Linux for On-Premises Databases
+setp1: Build and Install Python for Linux for On-Premises Databases   
 1.Go to the Python website and download the Gzipped source tarball. The downloaded file name is Python-3.9.5.tgz  
-`wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz`
+`wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz`   
+
 2.Create a directory $ORACLE_HOME/python and extract the contents to this directory  
 `mkdir -p $ORACLE_HOME/python
 tar -xvzf Python-3.9.5.tgz --strip-components=1 -C $ORACLE_HOME/python`
-The contents of the Gzipped source tarball will be copied directly to $ORACLE_HOME/python
+The contents of the Gzipped source tarball will be copied directly to $ORACLE_HOME/python   
+
 3.Go to the new directory   
 `cd $ORACLE_HOME/python`
 4.OML4Py requires the presence of the perl-Env, libffi-devel, openssl, openssl-devel, tk-devel, xz-devel, zlib-devel, bzip2-devel, readline-devel, libuuid-devel and ncurses-devel libraries.
@@ -36,4 +38,46 @@ rpm -qa bzip2-devel
 rpm -qa readline-devel
 rpm -qa libuuid-devel
 rpm -qa ncurses-devel
+rpm -qa sqlite-devel
 ```
+If the libraries are present, then those commands should return messages such as the following. Depending on the version of Linux that you are using, such as version 7.3 or 7.5, the exact messages differ slightly.   
+```
+perl-Env-1.04-2.el7.noarch
+libffi-devel-3.0.13-19.el7.i686
+libffi-devel-3.0.13-19.el7.x86_64
+openssl-devel-1.0.2k-19.0.1.el7.x86_64
+tk-devel-8.5.13-6.el7.i686
+xz-devel-5.2.2-1.el7.x86_64
+zlib-devel-1.2.7-17.el7.x86_64
+zlib-devel-1.2.7-17.el7.i686
+bzip2-devel-1.0.6-13.el7.x86_64
+bzip2-devel-1.0.6-13.el7.i686
+readline-devel-6.2-11.el7.i686
+readline-devel-6.2-11.el7.x86_64
+libuuid-devel-2.23.2-61.el7_7.1.x86_64
+ncurses-devel-5.9-14.20130511.el7_4.x86_64
+```   
+The actual value returned depends on the version of Linux that you are using.  
+If no output is returned, then install the packages as sudo or root user.  
+`sudo yum install perl-Env libffi-devel openssl openssl-devel tk-devel xz-devel zlib-devel bzip2-devel readline-devel libuuid-devel ncurses-devel`  
+5.To build Python 3.9.5, enter the following commands, where PREFIX is the directory in which you installed Python-3.9.5. The command on the Oracle Machine Learning for Python server will be:   
+```
+cd $ORACLE_HOME/python
+./configure --enable-shared --prefix=$ORACLE_HOME/python
+
+make clean; make
+make altinstall
+```  
+  `note` Note:Be sure to use the --enable-shared flag if you are going to use Embedded Python Execution; otherwise, using an Embedded Python Execution function results in an extproc error.
+Be sure to invoke make altinstall instead of make install to avoid overwriting the system Python.  
+6.Set environment variable PYTHONHOME and add it to your PATH, and set environment variable LD_LIBRARY_PATH:   
+```
+export PYTHONHOME=$ORACLE_HOME/python
+export PATH=$PYTHONHOME/bin:$PATH
+export LD_LIBRARY_PATH=$PYTHONHOME/lib:$LD_LIBRARY_PATH
+```
+  `note` Note:In order to use Python for OML4Py, the variables must be set, and these variables must appear before system Python in PATH and LD_LIBRARY_PATH.     
+pip will return warnings during package installation if the latest version is not installed. You can upgrade the version of pip to avoid these warnings:   
+`python3 -m pip install --upgrade pip`
+
+
