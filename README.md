@@ -24,6 +24,7 @@ The contents of the Gzipped source tarball will be copied directly to $ORACLE_HO
 
 3.Go to the new directory   
 `cd $ORACLE_HOME/python`
+
 4.OML4Py requires the presence of the perl-Env, libffi-devel, openssl, openssl-devel, tk-devel, xz-devel, zlib-devel, bzip2-devel, readline-devel, libuuid-devel and ncurses-devel libraries.
 You can confirm that those libraries are present by issuing the following commands:   
 ```
@@ -60,6 +61,7 @@ ncurses-devel-5.9-14.20130511.el7_4.x86_64
 The actual value returned depends on the version of Linux that you are using.  
 If no output is returned, then install the packages as sudo or root user.  
 `sudo yum install perl-Env libffi-devel openssl openssl-devel tk-devel xz-devel zlib-devel bzip2-devel readline-devel libuuid-devel ncurses-devel`  
+
 5.To build Python 3.9.5, enter the following commands, where PREFIX is the directory in which you installed Python-3.9.5. The command on the Oracle Machine Learning for Python server will be:   
 ```
 cd $ORACLE_HOME/python
@@ -70,6 +72,7 @@ make altinstall
 ```  
   `note` Note:Be sure to use the --enable-shared flag if you are going to use Embedded Python Execution; otherwise, using an Embedded Python Execution function results in an extproc error.
 Be sure to invoke make altinstall instead of make install to avoid overwriting the system Python.  
+
 6.Set environment variable PYTHONHOME and add it to your PATH, and set environment variable LD_LIBRARY_PATH:   
 ```
 export PYTHONHOME=$ORACLE_HOME/python
@@ -79,5 +82,25 @@ export LD_LIBRARY_PATH=$PYTHONHOME/lib:$LD_LIBRARY_PATH
   `note` Note:In order to use Python for OML4Py, the variables must be set, and these variables must appear before system Python in PATH and LD_LIBRARY_PATH.     
 pip will return warnings during package installation if the latest version is not installed. You can upgrade the version of pip to avoid these warnings:   
 `python3 -m pip install --upgrade pip`
+
+7.Create a symbolic link in your $ORACLE_HOME/python/bin directory to link to your python3.9 executable, which you can do with the following commands:  
+```
+cd $ORACLE_HOME/python/bin
+ln -s python3.9 python3
+```   
+You can now start Python by running the command python3. To verify the directory where Python is installed, use the sys.executable command from the sys package. For example:   
+```
+$ python3
+Python 3.9.5 (default, Feb 22 2022, 15:13:36)
+[GCC 4.8.5 20150623 (Red Hat 4.8.5-44.0.3)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import sys
+>>> print(sys.executable)
+/u01/app/oracle/product/19.3/dbhome_1/python/bin/python3
+```
+This returns the absolute path of the Python executable binary.  
+  
+If you run the command python3 and you get the error command not found, then that means the system cannot find an executable named python3 in $PYTHONHOME/bin. A symlink is required for the OML4Py server installation components. So, in that case, you need to create a symbolic link in your PREFIX/bin directory to link to your python3.9 executable as described in Step 6.   
+
 
 
