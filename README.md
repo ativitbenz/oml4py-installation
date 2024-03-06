@@ -14,6 +14,6 @@ On-Premises OML4Py Configuration Requirements and Server Support Matrix
   - Oracle Machine Learning for Python Version	Python Version	On-Premises Oracle Database Release 1.0	3.9.5	19c, 21c
 
 setp1: Build and Install Python for Linux for On-Premises Databases
-Go to the Python website and download the Gzipped source tarball. The downloaded file name is Python-3.9.5.tgz
+Go to the Python website and download the Gzipped source tarball. The downloaded file name is Python-3.9.5.tgz  
 `wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz`
 
