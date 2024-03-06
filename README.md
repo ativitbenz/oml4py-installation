@@ -1,6 +1,17 @@
 # oml4py-installation
 Original document: `https://docs.oracle.com/en/database/oracle/machine-learning/oml4py/1/mlpug/oracle-machine-learning-python.html#GUID-D00976CA-3663-4F32-A6A2-B6BF5A843ADC`
 
+<details>
+<summary>Topic</summary>
+  
+- [OML4Py On Premises System Requirements](#System-Requirements)
+- [Build and Install Python for Linux for On-Premises Databases]
+- [Install the Required Supporting Packages for Linux for On-Premises Databases]
+- [Install OML4Py Server for On-Premises Oracle Database]
+- [Install OML4Py Client for On-Premises Databases]
+</details>
+
+## System-Requirements
 `note`: OML4Py on premises runs on 64-bit platforms only.
 
 Both client and server on-premises components are supported on the Linux platforms listed in the table below.
