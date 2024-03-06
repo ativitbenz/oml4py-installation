@@ -1,5 +1,5 @@
 # oml4py-installation
-Original document: https://docs.oracle.com/en/database/oracle/machine-learning/oml4py/1/mlpug/oracle-machine-learning-python.html#GUID-D00976CA-3663-4F32-A6A2-B6BF5A843ADC
+Original document: `https://docs.oracle.com/en/database/oracle/machine-learning/oml4py/1/mlpug/oracle-machine-learning-python.html#GUID-D00976CA-3663-4F32-A6A2-B6BF5A843ADC`
 
 `note`: OML4Py on premises runs on 64-bit platforms only.
 
