@@ -15,6 +15,10 @@ On-Premises OML4Py Configuration Requirements and Server Support Matrix
 
 setp1: Build and Install Python for Linux for On-Premises Databases
 Go to the Python website and download the Gzipped source tarball. The downloaded file name is Python-3.9.5.tgz
-``` wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz ```
+<clipboard-copy for="blob-path" class="btn btn-sm BtnGroup-item">
+  Copy path
+</clipboard-copy>
+<div id="blob-path">src/index.js</div>
+wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz 
 
 
