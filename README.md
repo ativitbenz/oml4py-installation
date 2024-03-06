@@ -103,4 +103,63 @@ This returns the absolute path of the Python executable binary.
 If you run the command python3 and you get the error command not found, then that means the system cannot find an executable named python3 in $PYTHONHOME/bin. A symlink is required for the OML4Py server installation components. So, in that case, you need to create a symbolic link in your PREFIX/bin directory to link to your python3.9 executable as described in Step 6.   
 
 
+# Install the Required Supporting Packages for Linux for On-Premises Databases
+Both the OML4Py server and client installations for an on-premises Oracle database require that you also install a set of supporting Python packages, as described below.   
+
+Installing required packages on OML4Py client machine   
+
+The on-premises OML4Py client requires the following Python packages:  
+
+numpy 1.21.5   
+pandas 1.3.4  
+scipy 1.7.3  
+cx_Oracle 8.1.0  
+scikit-learn 1.0.1  
+matplotlib 3.3.3  
+Use pip3.9 to install the supporting packages. For OML4Py client installation of all the packages, run the following command, specifying the package: ex.pip3.9 install packagename
+```
+pip3.9 install pandas==1.3.4
+pip3.9 install scipy==1.7.3
+pip3.9 install matplotlib==3.3.3
+pip3.9 install cx_Oracle==8.1.0
+pip3.9 install threadpoolctl==2.1.0
+pip3.9 install joblib==0.14.0
+pip3.9 install scikit-learn==1.0.1 --no-deps
+pip3.9 uninstall numpy
+pip3.9 install numpy==1.21.5
+```
+This command installs the cx_Oracle package using an example proxy server:   
+` pip3.9 install cx_Oracle==8.1.0 --proxy="http://www-proxy.example.com:80"` 
+## Installing required packages on OML4Py server machine  
+
+On the OML4Py server machine, all these packages must be installed into $ORACLE_HOME/oml4py/modules so they can be detected by the Embedded Python Execution process. Run the following command, specifying the package and target directory, $ORACLE_HOME/oml4py/modules:  ex.pip3.9 install packagename --target=$ORACLE_HOME/oml4py/modules
+```
+pip3.9 install pandas==1.3.4 --target=$ORACLE_HOME/oml4py/modules
+pip3.9 install scipy==1.7.3 --target=$ORACLE_HOME/oml4py/modules
+pip3.9 install matplotlib==3.3.3 --target=$ORACLE_HOME/oml4py/modules
+pip3.9 install cx_Oracle==8.1.0 --target=$ORACLE_HOME/oml4py/modules
+pip3.9 install threadpoolctl==2.1.0 --target=$ORACLE_HOME/oml4py/modules
+pip3.9 install joblib==0.14.0 --target=$ORACLE_HOME/oml4py/modules
+pip3.9 install scikit-learn==1.0.1 --no-deps --target=$ORACLE_HOME/oml4py/modules
+pip3.9 uninstall numpy 
+pip3.9 install numpy==1.21.5 --target=$ORACLE_HOME/oml4py/modules
+```
+This command installs the cx_Oracle package using an example proxy server:  
+`pip3.9 install cx_Oracle==8.1.0 --proxy="http://www-proxy.example.com:80" --target=$ORACLE_HOME/oml4py/modules`
+
+Verify the Package Installation  
+Load the packages below to ensure they have been installed successfully. Start Python and run the following commands:
+```
+$ python3
+Python 3.9.5 (default, Feb 22 2022, 15:13:36)
+[GCC 4.8.5 20150623 (Red Hat 4.8.5-44.0.3)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import numpy
+>>> import pandas
+>>> import scipy
+>>> import matplotlib
+>>> import cx_Oracle
+>>> import sklearn
+```
+
 
