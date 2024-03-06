@@ -7,8 +7,8 @@ Both client and server on-premises components are supported on the Linux platfor
 
 On-Premises OML4Py Platform Requirements
 Operating System and Hardware Platform	Description
-  - Oracle Linux x86-64 7.x 64-bit Oracle Linux Release 7
-  - Oracle Linux x86-64 8.x 64-bit Oracle Linux Release 8
+  - Oracle Linux x86-64 7.x 64-bit 
+  - Oracle Linux x86-64 8.x 64-bit 
 
 On-Premises OML4Py Configuration Requirements and Server Support Matrix
   - Oracle Machine Learning for Python Version	Python Version	On-Premises Oracle Database Release 1.0	3.9.5	19c, 21c
