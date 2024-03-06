@@ -65,7 +65,7 @@ If no output is returned, then install the packages as sudo or root user.
 5.To build Python 3.9.5, enter the following commands, where PREFIX is the directory in which you installed Python-3.9.5. The command on the Oracle Machine Learning for Python server will be:   
 ```
 cd $ORACLE_HOME/python
-./configure --enable-shared --prefix=$ORACLE_HOME/python
+./configure --enable-shared --enable-loadable-sqlite-extensions --prefix=$ORACLE_HOME/python
 
 make clean; make
 make altinstall
