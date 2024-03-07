@@ -175,5 +175,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> import cx_Oracle
 >>> import sklearn
 ```
-``note`` setup jupyter notebook for running on public IP 
+``
+note
+`` 
+setup jupyter notebook for running on public IP 
 
