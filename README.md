@@ -196,13 +196,14 @@ Type "help", "copyright", "credits" or "license" for more information.
 ```
 sudo ufw allow 8888 # enable your tcp:8888 port, which is ur default jupyter port
 ```
-  - Step4: set a password
+  - Step4: set a password (option)
 ```
 jupyter notebook password # it will prompt for password
 ```
-  - Step5: start jupyter
+  - Step5: start jupyter -> more option running notebook (https://docs.jupyter.org/en/latest/running.html)
 ```
 jupyter notebook --no-browser
 ```
 `and connect like http://xxx.xxx.xxx.xxx:8888/login?`
+
 
