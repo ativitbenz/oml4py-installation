@@ -5,7 +5,7 @@ Original document:
 <summary>Topic</summary>
   
 - [OML4Py On Premises System Requirements](#System-Requirements)
-- [Build and Install Python for Linux for On-Premises Databases](#setp1:Build-and-Install-Python-for-Linux-for-On-Premises-Databases)
+- [Build and Install Python for Linux for On-Premises Databases](#step1:Build-and-Install-Python-for-Linux-for-On-Premises-Databases)
 - [Install the Required Supporting Packages for Linux for On-Premises Databases](#Install-the-Required-Supporting-Packages-for-Linux-for-On-Premises-Databases)
 - [Install OML4Py Server for On-Premises Oracle Database]
 - [Install OML4Py Client for On-Premises Databases]
