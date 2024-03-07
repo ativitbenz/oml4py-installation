@@ -5,7 +5,7 @@ Original document:
 <summary>Topic</summary>
   
 - [OML4Py On Premises System Requirements](#System-Requirements)
-- [Build and Install Python for Linux for On-Premises Databases](#step1:Build-and-Install-Python-for-Linux-for-On-Premises-Databases)
+- [Build and Install Python for Linux for On-Premises Databases](#Build-and-Install-Python-for-Linux-for-On-Premises-Databases)
 - [Install the Required Supporting Packages for Linux for On-Premises Databases](#Install-the-Required-Supporting-Packages-for-Linux-for-On-Premises-Databases)
 - [Install OML4Py Server for On-Premises Oracle Database]
 - [Install OML4Py Client for On-Premises Databases]
@@ -24,8 +24,8 @@ Operating System and Hardware Platform	Description
 
 On-Premises OML4Py Configuration Requirements and Server Support Matrix
   - Oracle Machine Learning for Python Version	Python Version	On-Premises Oracle Database Release 1.0	3.9.5	19c, 21c
-
-setp1:Build-and-Install-Python-for-Linux-for-On-Premises-Databases   
+## Build-and-Install-Python-for-Linux-for-On-Premises-Databases
+  
 1.Go to the Python website and download the Gzipped source tarball. The downloaded file name is Python-3.9.5.tgz  
 `wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz`   
 
