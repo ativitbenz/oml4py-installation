@@ -12,6 +12,7 @@ https://docs.oracle.com/en/database/oracle/machine-learning/oml4py/1/mlpug/oracl
 - [Install the Required Supporting Packages for Linux for On-Premises Databases]
 - [Install OML4Py Server for On-Premises Oracle Database]
 - [Install OML4Py Client for On-Premises Databases]
+- [Install Jupyter notebook and configuration](#setup-jupyter-notebook)
 </details>
 
 ## System-Requirements
@@ -175,7 +176,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> import cx_Oracle
 >>> import sklearn
 ```
-``note`` setup jupyter notebook for running on public IP
+##  setup-jupyter-notebook
+`note` If you want to connect browser on public IP 
   - Step1: generate the file by typing this line in console
     ```
     jupyter notebook --generate-config
