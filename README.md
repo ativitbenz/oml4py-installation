@@ -1,4 +1,3 @@
-# oml4py-installation
 Original document:   
 `https://docs.oracle.com/en/database/oracle/machine-learning/oml4py/1/mlpug/oracle-machine-learning-python.html#GUID-D00976CA-3663-4F32-A6A2-B6BF5A843ADC`
 
@@ -6,7 +5,7 @@ Original document:
 <summary>Topic</summary>
   
 - [OML4Py On Premises System Requirements](#System-Requirements)
-- [Build and Install Python for Linux for On-Premises Databases]
+- [Build and Install Python for Linux for On-Premises Databases](#setp1)
 - [Install the Required Supporting Packages for Linux for On-Premises Databases]
 - [Install OML4Py Server for On-Premises Oracle Database]
 - [Install OML4Py Client for On-Premises Databases]
@@ -116,7 +115,7 @@ This returns the absolute path of the Python executable binary.
 If you run the command python3 and you get the error command not found, then that means the system cannot find an executable named python3 in $PYTHONHOME/bin. A symlink is required for the OML4Py server installation components. So, in that case, you need to create a symbolic link in your PREFIX/bin directory to link to your python3.9 executable as described in Step 6.   
 
 
-# Install the Required Supporting Packages for Linux for On-Premises Databases
+## Install the Required Supporting Packages for Linux for On-Premises Databases
 Both the OML4Py server and client installations for an on-premises Oracle database require that you also install a set of supporting Python packages, as described below.   
 
 Installing required packages on OML4Py client machine   
