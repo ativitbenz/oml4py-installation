@@ -5,8 +5,8 @@ Original document:
 <summary>Topic</summary>
   
 - [OML4Py On Premises System Requirements](#System-Requirements)
-- [Build and Install Python for Linux for On-Premises Databases](#setp1)
-- [Install the Required Supporting Packages for Linux for On-Premises Databases]
+- [Build and Install Python for Linux for On-Premises Databases](#setp1:Build-and-Install-Python-for-Linux-for-On-Premises-Databases)
+- [Install the Required Supporting Packages for Linux for On-Premises Databases](#Install-the-Required-Supporting-Packages-for-Linux-for-On-Premises-Databases)
 - [Install OML4Py Server for On-Premises Oracle Database]
 - [Install OML4Py Client for On-Premises Databases]
 - [Install Jupyter notebook and configuration](#setup-jupyter-notebook)
@@ -25,7 +25,7 @@ Operating System and Hardware Platform	Description
 On-Premises OML4Py Configuration Requirements and Server Support Matrix
   - Oracle Machine Learning for Python Version	Python Version	On-Premises Oracle Database Release 1.0	3.9.5	19c, 21c
 
-setp1: Build and Install Python for Linux for On-Premises Databases   
+setp1:Build-and-Install-Python-for-Linux-for-On-Premises-Databases   
 1.Go to the Python website and download the Gzipped source tarball. The downloaded file name is Python-3.9.5.tgz  
 `wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz`   
 
@@ -115,7 +115,7 @@ This returns the absolute path of the Python executable binary.
 If you run the command python3 and you get the error command not found, then that means the system cannot find an executable named python3 in $PYTHONHOME/bin. A symlink is required for the OML4Py server installation components. So, in that case, you need to create a symbolic link in your PREFIX/bin directory to link to your python3.9 executable as described in Step 6.   
 
 
-## Install the Required Supporting Packages for Linux for On-Premises Databases
+## Install-the-Required-Supporting-Packages-for-Linux-for-On-Premises-Databases
 Both the OML4Py server and client installations for an on-premises Oracle database require that you also install a set of supporting Python packages, as described below.   
 
 Installing required packages on OML4Py client machine   
