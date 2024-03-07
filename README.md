@@ -175,8 +175,32 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> import cx_Oracle
 >>> import sklearn
 ```
-``
-note
-`` 
-setup jupyter notebook for running on public IP 
+``note`` setup jupyter notebook for running on public IP
+  - Step1: generate the file by typing this line in console
+    ```
+    jupyter notebook --generate-config
+    ```
+  - Step2: edit the values
+  
+  ```
+    vi  <your path>/jupyter_notebook_config.py
+  ```
+( add the following two line anywhere because the default values are commented anyway)
+```
+    c.NotebookApp.allow_origin = '*' #allow all origins
+    c.NotebookApp.ip = '0.0.0.0' # listen on all IPs
+```
+  - Step3: once you closed the gedit, in case your port is blocked
+```
+sudo ufw allow 8888 # enable your tcp:8888 port, which is ur default jupyter port
+```
+  - Step4: set a password
+```
+jupyter notebook password # it will prompt for password
+```
+  - Step5: start jupyter
+```
+jupyter notebook --no-browser
+```
+`and connect like http://xxx.xxx.xxx.xxx:8888/login?`
 
