@@ -7,7 +7,7 @@ As a result of building models, each model has a set of model detail views that 
 If full model details are required, use the DBMS_DATA_MINING.EXPORT_MODEL and DBMS_DATA_MINING.IMPORT_MODEL procedures. Serialized model export support only models that produce scores. Specifically, it does not support Attribute Importance, Association Rules, Exponential Smoothing, or O-Cluster (although O-Cluster does support scoring). Use DBMS_DATA_MINING.EXPORT_MODEL to export these models and scenarios when the full model details are required.
 
 ## Deployment Scenarios
-The same machine learning algorithms are available in both Autonomous Database and on-premises. Users have the option to build models on premises and deploy to the cloud, and vice versa.
+The same machine learning algorithms are available in `both Autonomous Database and on-premises.` Users have the option to build models on premises and deploy to the cloud, and vice versa.
 
 Serialized models can also be deployed to OML Services, which provides REST endpoints hosted on Autonomous Database. These endpoints enable storing OML models and creating scoring endpoints. The REST API for OML Services supports both OML models and ONNX format models, and enables cognitive text functionality.
 
