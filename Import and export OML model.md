@@ -11,7 +11,7 @@ The same machine learning algorithms are available in `both Autonomous Database 
 
 Serialized models can also be deployed to OML Services, which provides REST endpoints hosted on Autonomous Database. These endpoints enable storing OML models and creating scoring endpoints. The REST API for OML Services supports both OML models and ONNX format models, and enables cognitive text functionality.
 
-In this notebook we demonstrate the following scenarios using DBMS_DATA_MINING.EXPORT_SERMODEL and DBMS_DATA_MINING.IMPORT_SERMODEL:
+In this notebook, we demonstrate the following scenarios using DBMS_DATA_MINING.EXPORT_SERMODEL and DBMS_DATA_MINING.IMPORT_SERMODEL:
 
 - Migrating models between two schemas in the same database
 - Migrating models between two separate database instances
@@ -23,3 +23,46 @@ In this notebook we demonstrate the following scenarios using DBMS_DATA_MINING.E
 Download Dataset from: `https://gist.github.com/noamross/e5d3e859aa0c794be10b` 
 
 In this scenario, we use separate databases for the development and testing of the machine learning model and ultimately production. Here, data scientists build models in one environment, and when the machine learning model produces satisfactory results, it can be exported from the development database and imported into the production database.
+
+Step1: Import dataset using SQL developer software and granting all privileges to a user is generally `not` recommended due to security concerns, as it provides the user with full control over the database.
+```
+GRANT ALL PRIVILEGES TO username;
+```
+Step2: Generated index columns for training data
+```
+-- GENERATED INDEX COLOUMNS
+ALTER TABLE cars
+ADD (CID NUMBER GENERATED ALWAYS AS IDENTITY);
+```
+Step3: Build model
+```
+BEGIN DBMS_DATA_MINING.DROP_MODEL('GLM_MOD');
+EXCEPTION WHEN OTHERS THEN NULL; END;
+/
+
+DECLARE
+  v_setlst DBMS_DATA_MINING.SETTING_LIST;
+    
+BEGIN
+  v_setlst('PREP_AUTO') := 'ON';
+  v_setlst('ALGO_NAME') := 'ALGO_GENERALIZED_LINEAR_MODEL';
+  v_setlst('GLMS_DIAGNOSTICS_TABLE_NAME') := 'GLMR_DIAG';
+    
+  DBMS_DATA_MINING.CREATE_MODEL2(
+    model_name          => 'GLM_MOD',
+    mining_function     => 'REGRESSION',
+    data_query          => 'SELECT * FROM CARS',
+    set_list            =>  v_setlst,
+    case_id_column_name => 'CID',
+    target_column_name  => 'MPG');
+END;
+/
+```
+Step4: Search model to created
+```
+SELECT MODEL_NAME, MINING_FUNCTION, ALGORITHM, CREATION_DATE 
+FROM   ALL_MINING_MODELS 
+WHERE  MODEL_NAME='GLM_MOD';
+```
+Step5: 
+
