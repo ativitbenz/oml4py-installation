@@ -163,6 +163,11 @@ BEGIN EXECUTE IMMEDIATE 'DROP TABLE MODEL_IMPORT';
 EXCEPTION WHEN OTHERS THEN NULL; END;
 /
 
+-----------------------------------------------
+-- Create table to temporarily store the model
+-----------------------------------------------
+CREATE TABLE MODEL_IMPORT(MY_MODEL BLOB)          
+
 ---------------------------
 -- Drop model if it exists
 ---------------------------
@@ -173,12 +178,7 @@ EXCEPTION WHEN OTHERS THEN NULL; END;
 ----------------------------------------------------
 -- Define directory where serialized model is saved
 ----------------------------------------------------
-CREATE OR REPLACE DIRECTORY MYDIR AS '/home/oracle'; 
-
------------------------------------------------
--- Create table to temporarily store the model
------------------------------------------------
-CREATE TABLE MODEL_IMPORT(MY_MODEL BLOB)                     
+CREATE OR REPLACE DIRECTORY MYDIR AS '/home/oracle';            
 
 DECLARE
   BLOB_MODEL BLOB;
