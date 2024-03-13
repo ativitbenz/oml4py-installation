@@ -19,3 +19,6 @@ In this notebook we demonstrate the following scenarios using DBMS_DATA_MINING.E
   - Autonomous Database to Oracle Database
   - Oracle Database to Autonomous Database
   - Oracle Database to Oracle Database
+ 
+Download Dataset from: `https://gist.github.com/noamross/e5d3e859aa0c794be10b` 
+In this scenario, we use separate databases for the development and testing of the machine learning model and ultimately production. Here, data scientists build models in one environment, and when the machine learning model produces satisfactory results, it can be exported from the development database and imported into the production database.
