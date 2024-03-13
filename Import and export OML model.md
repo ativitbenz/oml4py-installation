@@ -58,13 +58,13 @@ BEGIN
 END;
 /
 ```
-Step4: Drop, then build a model
+Step4: View model in databases
 ```
 SELECT MODEL_NAME, MINING_FUNCTION, ALGORITHM, CREATION_DATE 
 FROM   ALL_MINING_MODELS 
 WHERE  MODEL_NAME='GLM_MOD';
 ```
-Step5: Drop, then build a model
+Step5: Drop, Create temporary table model export
 ```
 BEGIN EXECUTE IMMEDIATE 'DROP TABLE MODEL_EXPORT';  -- drop table if it exists
 EXCEPTION WHEN OTHERS THEN NULL; END;
