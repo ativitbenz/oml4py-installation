@@ -34,7 +34,7 @@ Step2: Generated index columns for training data
 ALTER TABLE cars
 ADD (CID NUMBER GENERATED ALWAYS AS IDENTITY);
 ```
-Step3: Build model
+Step3: Drop, then build a model
 ```
 BEGIN DBMS_DATA_MINING.DROP_MODEL('GLM_MOD');
 EXCEPTION WHEN OTHERS THEN NULL; END;
@@ -58,11 +58,159 @@ BEGIN
 END;
 /
 ```
-Step4: Search model to created
+Step4: Drop, then build a model
 ```
 SELECT MODEL_NAME, MINING_FUNCTION, ALGORITHM, CREATION_DATE 
 FROM   ALL_MINING_MODELS 
 WHERE  MODEL_NAME='GLM_MOD';
 ```
-Step5: 
+Step5: Drop, then build a model
+```
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE MODEL_EXPORT';  -- drop table if it exists
+EXCEPTION WHEN OTHERS THEN NULL; END;
+/
+
+CREATE TABLE MODEL_EXPORT(MY_MODEL BLOB)
+```
+Step6: Export the model to the table
+```
+DECLARE
+  BLOB_MODEL BLOB;
+BEGIN
+  DBMS_LOB.CREATETEMPORARY(BLOB_MODEL, FALSE);
+  DBMS_DATA_MINING.EXPORT_SERMODEL(BLOB_MODEL, 'GLM_MOD');
+  INSERT INTO MODEL_EXPORT values (BLOB_MODEL);   -- serialized model BLOB saved in table MODEL_EXPORT
+  commit;
+  DBMS_LOB.FREETEMPORARY(BLOB_MODEL);
+END;
+```
+```
+-- Confirm the model was exported by looking at the length of the BLOB
+SELECT LENGTH(MY_MODEL) AS MODEL_LEN from MODEL_EXPORT
+```
+Step7: Create a procedure to write the model to a serialized BLOB 
+Define the `write_serialized_model procedure` to export a model as a serialized BLOB to a directory in the database environment
+```
+CREATE OR REPLACE PROCEDURE write_serialized_model (v_blob blob, dirName varchar2, filName varchar2) IS
+    v_output utl_file.file_type;
+    v_amt binary_integer := 2000;
+    v_raw raw(2000);
+    v_pos binary_integer := 1;
+    v_len binary_integer;
+BEGIN
+    v_output := utl_file.fopen(dirName, filName, 'wb', 32760);
+    v_len := dbms_lob.getlength(v_blob);
+WHILE (v_pos <= v_len) loop
+  IF (v_len - v_pos + 1) < 2000 then
+    v_amt := v_len - v_pos + 1;
+  END IF;
+  dbms_lob.read(v_blob,v_amt,v_pos,v_raw);
+  utl_file.put_raw(v_output, v_raw);
+  utl_file.fflush(v_output);
+  v_pos := v_pos + v_amt;
+ END LOOP;
+ utl_file.fclose(v_output);
+END;
+```
+
+Step8: Export a serialized model from an Oracle Database and import to another Oracle Database
+1.Export the model to a serialized BLOB from Oracle Database to the database server Operating System.
+  a. Define the `write_serialized_model` procedure under “Prerequisites” to export a model as a serialized BLOB to a directory.
+  b. Define the directory where the serialized model will be exported in SQL.
+  c. Export the model using `DBMS_DATA_MINING.EXPORT_SERMODEL`.
+
+2. Import the serialized model to the target Oracle Database
+  a. Download the serialized model to the target database server.
+  b. In SQL, define the directory from which the serialized model will be imported.
+  c. Import the model using `DBMS_DATA_MINING.IMPORT_SERMODEL`.
+
+`note` In this example, the name of the in-database model is GLM_MOD and the name of the serialized model is GLM_MOD.mod.
+
+The following commands will run in a SQL prompt on the database server or in a SQL Developer instance connected to the database server as the OML user:
+
+1. Export the model to a file on the database server
+```
+----------------------------------------------------
+-- Define directory where serialized model is saved
+----------------------------------------------------
+CREATE OR REPLACE DIRECTORY MYDIR AS '/home/oracle';       
+
+DECLARE
+  MODNAME VARCHAR2(100) := 'GLM_MOD';
+  SER_MODNAME VARCHAR2(100);
+  BLOB_MODEL BLOB;
+BEGIN
+  DBMS_LOB.CREATETEMPORARY(BLOB_MODEL, FALSE);
+  SELECT CONCAT(MODNAME,'.mod') INTO SER_MODNAME from dual;
+  ---------------------------
+  -- export serialized model 
+  ---------------------------
+  DBMS_DATA_MINING.EXPORT_SERMODEL(BLOB_MODEL, 'GLM_MOD'); 
+  ---------------------------------------------------
+  -- convenience function to write a model to a BLOB
+  ---------------------------------------------------
+  write_serialized_model(BLOB_MODEL, 'MYDIR', SER_MODNAME);   
+  DBMS_LOB.FREETEMPORARY(BLOB_MODEL);
+END;
+/
+```
+2. Copy the serialized model to the target database server and import the model
+```
+---------------------------
+-- Drop table if it exists
+---------------------------
+BEGIN EXECUTE IMMEDIATE 'DROP TABLE MODEL_IMPORT';           
+EXCEPTION WHEN OTHERS THEN NULL; END;
+/
+
+---------------------------
+-- Drop model if it exists
+---------------------------
+BEGIN DBMS_DATA_MINING.DROP_MODEL('GLM_MOD');             
+EXCEPTION WHEN OTHERS THEN NULL; END;
+/
+
+----------------------------------------------------
+-- Define directory where serialized model is saved
+----------------------------------------------------
+CREATE OR REPLACE DIRECTORY MYDIR AS '/home/oracle'; 
+
+-----------------------------------------------
+-- Create table to temporarily store the model
+-----------------------------------------------
+CREATE TABLE MODEL_IMPORT(MY_MODEL BLOB)                     
+
+DECLARE
+  BLOB_MODEL BLOB;
+BEGIN
+  INSERT INTO MODEL_IMPORT values (BFILENAME('MYDIR','GLM_MOD.mod'));
+  commit;
+  SELECT MY_MODEL INTO BLOB_MODEL FROM MODEL_IMPORT;
+  --------------------------
+  -- Import serialized model
+  --------------------------
+  DBMS_DATA_MINING.IMPORT_SERMODEL(BLOB_MODEL, 'GLM_MOD');  
+END;
+/
+
+Test the model:
+-----------------------------
+-- Verify model was imported
+ ----------------------------
+SELECT * FROM USER_MINING_MODELS WHERE MODEL_NAME='GLM_MOD';    
+-----------------------------
+-- Model description
+ ----------------------------
+SELECT MODEL_NAME, MINING_FUNCTION, ALGORITHM, CREATION_DATE FROM USER_MINING_MODELS WHERE MODEL_NAME='GLM_MOD';  
+-----------------------------
+-- Model settings
+ ----------------------------
+SELECT SETTING_NAME, SETTING_VALUE FROM ALL_MINING_MODEL_SETTINGS WHERE MODEL_NAME='GLM_MOD'; 
+-----------------------------
+-- Perform scoring
+ ----------------------------
+SELECT CID, ROUND(PREDICTION(GLM_MOD USING *), 1)  
+AS PREDICTED_MPG, MPG AS ACTUAL_MPG FROM CARS ORDER BY CID;
+```
+
 
