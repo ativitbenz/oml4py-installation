@@ -181,9 +181,9 @@ Type "help", "copyright", "credits" or "license" for more information.
     ```
   - Step2: edit the values
   
-  ```
-    vi  <your path>/jupyter_notebook_config.py
-  ```
+    ```
+      vi  <your path>/jupyter_notebook_config.py
+    ```
 ( add the following two line anywhere because the default values are commented anyway)
 ```
     c.NotebookApp.allow_origin = '*' #allow all origins
